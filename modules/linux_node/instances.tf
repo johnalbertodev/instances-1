@@ -43,7 +43,9 @@ resource "null_resource" "install_package" {
   count = length(aws_instance.my_vm)>0 ? 1 : 0
   depends_on = [time_sleep.wait_30_seconds]
     provisioner "local-exec" {
-      command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i ./tf_ansible_${var.install_package}_inventory.ini ../ansible-playbooks/${var.playbook_name} --private-key '../keys/student.3-vm-key' "
+      command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i ./tf_ansible_${var.install_package}_inventory.ini  -i ./tf_ansible_webservers_inventory.ini ../ansible-playbooks/${var.playbook_name} --private-key '../keys/student.3-vm-key'"
+
+
   }
 }
 
